@@ -1,0 +1,9 @@
+{
+    "users": {
+    "RegisterSuccess": "उपयोगकर्ता सफलतापूर्वक पंजीकृत हुआ",
+    "LoginSuccess": "लॉगिन सफल",
+    "InvalidCredentials": "अमान्य ईमेल या पासवर्ड",
+    "Unauthorized": "पहुंच अस्वीकृत",
+    "InvalidToken": "अमान्य टोकन",
+    "Hello": "नमस्ते, स्वागत है!"}
+}

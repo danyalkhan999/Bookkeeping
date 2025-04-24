@@ -1,0 +1,10 @@
+{
+    "users":{
+    "RegisterSuccess": "User registered successfully",
+    "LoginSuccess": "Login successful",
+    "InvalidCredentials": "Invalid email or password",
+    "Unauthorized": "Access denied",
+    "InvalidToken": "Invalid token",
+    "Hello": "Hello, Welcome"
+    }
+}
