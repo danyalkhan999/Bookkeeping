@@ -6,5 +6,8 @@
     "Unauthorized": "Access denied",
     "InvalidToken": "Invalid token",
     "Hello": "Hello, Welcome"
-    }
+    },
+    "books": {
+    "FetchError": "Failed to fetch books. Please try again later."
+  }
 }

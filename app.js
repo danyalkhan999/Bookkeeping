@@ -9,7 +9,9 @@ app.use(i18nMiddleware);
 app.use(cors());
 
 const userRoutes = require("./routes/user.routes");
+const booksRoutes = require("./routes/books.routes");
 app.use("/api/user", userRoutes);
+app.use("/api/books", booksRoutes);
 
 app.get("/hi", (req, res) => {
   console.log("HIIIIIII");
