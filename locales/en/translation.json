@@ -1,5 +1,5 @@
 {
-    "users":{
+  "users":{
     "RegisterSuccess": "User registered successfully",
     "LoginSuccess": "Login successful",
     "InvalidCredentials": "Invalid email or password",
@@ -7,7 +7,7 @@
     "InvalidToken": "Invalid token",
     "Hello": "Hello, Welcome"
     },
-    "books": {
+  "books": {
     "FetchError": "Failed to fetch books. Please try again later.",
     "MissingFields":    "Title, author, and library are required.",
     "NotAuthorized":    "Only authors are allowed to create books.",
@@ -20,5 +20,17 @@
     "UpdateError":    "Failed to update book. Please try again.",
     "DeleteSuccess":  "Book deleted successfully.",
     "DeleteError":    "Failed to delete book. Please try again."
+  },
+  "borrower": {
+    "OnlyBorrowerAllowed": "Only users with the borrower role can borrow books.",
+    "BookIdRequired": "Please provide a bookId to borrow.",
+    "AlreadyBorrowed": "This book is already borrowed by another user.",
+    "BorrowSuccess": "Book borrowed successfully.",
+    "BorrowFailed": "Failed to borrow the book. Please try again.",
+    "NotBorrowed": "This book is not currently borrowed by anyone.",
+    "NotYourBook": "You cannot return a book you haven't borrowed.",
+    "ReturnSuccess": "Book returned successfully.",
+    "ReturnFailed": "Failed to return the book. Please try again."
   }
+
 }
