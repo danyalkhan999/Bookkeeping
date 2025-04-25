@@ -14,6 +14,11 @@
     "MissingCoverImage":"Cover image file is required.",
     "ImageUploadError": "Failed to upload cover image.",
     "CreatedSuccess":   "Book created successfully.",
-    "CreateError":      "Failed to create book. Please try again."
+    "CreateError":      "Failed to create book. Please try again.",
+    "NotFound":       "Book not found.",
+    "UpdateSuccess":  "Book updated successfully.",
+    "UpdateError":    "Failed to update book. Please try again.",
+    "DeleteSuccess":  "Book deleted successfully.",
+    "DeleteError":    "Failed to delete book. Please try again."
   }
 }

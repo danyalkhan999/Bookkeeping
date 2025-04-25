@@ -2,6 +2,87 @@ const Book = require("../models/Book.model");
 const bucket = require("../config/firebase");
 const { v4: uuidv4 } = require("uuid");
 
+// GET /api/books/:id
+exports.getBookById = async (req, res) => {
+  try {
+    const book = await Book.findById(req.params.id)
+      .populate("author", "name email")
+      .populate("borrower", "name email")
+      .populate("library", "name location");
+
+    if (!book) {
+      return res.status(404).json({ message: req.t("books.NotFound") });
+    }
+
+    res.status(200).json({ book });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: req.t("books.FetchError") });
+  }
+};
+
+// PUT /api/books/:id
+exports.updateBook = async (req, res) => {
+  try {
+    const book = await Book.findById(req.params.id);
+    if (!book) {
+      return res.status(404).json({ message: req.t("books.NotFound") });
+    }
+
+    // only the original author can update
+    if (
+      req.user.role !== "author" ||
+      req.user._id.toString() !== book.author.toString()
+    ) {
+      return res.status(403).json({ message: req.t("books.NotAuthorized") });
+    }
+
+    const { title, description, library, borrower } = req.body;
+    if (title !== undefined) book.title = title;
+    if (description !== undefined) book.description = description;
+    if (library !== undefined) book.library = library;
+    if (borrower !== undefined) book.borrower = borrower;
+
+    await book.save();
+    const updated = await book
+      .populate("author", "name email")
+      .populate("borrower", "name email")
+      .populate("library", "name location")
+      .execPopulate();
+
+    res
+      .status(200)
+      .json({ message: req.t("books.UpdateSuccess"), book: updated });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: req.t("books.UpdateError") });
+  }
+};
+
+// DELETE /api/books/:id
+exports.deleteBook = async (req, res) => {
+  try {
+    const book = await Book.findById(req.params.id);
+    if (!book) {
+      return res.status(404).json({ message: req.t("books.NotFound") });
+    }
+
+    // only the original author can delete
+    if (
+      req.user.role !== "author" ||
+      req.user._id.toString() !== book.author.toString()
+    ) {
+      return res.status(403).json({ message: req.t("books.NotAuthorized") });
+    }
+
+    await Book.findByIdAndDelete(req.params.id);
+    res.status(200).json({ message: req.t("books.DeleteSuccess") });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: req.t("books.DeleteError") });
+  }
+};
+
 exports.createBook = async (req, res) => {
   try {
     // 1️⃣ Validate required fields
