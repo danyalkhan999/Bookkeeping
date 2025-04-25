@@ -8,6 +8,12 @@
     "Hello": "Hello, Welcome"
     },
     "books": {
-    "FetchError": "Failed to fetch books. Please try again later."
+    "FetchError": "Failed to fetch books. Please try again later.",
+    "MissingFields":    "Title, author, and library are required.",
+    "NotAuthorized":    "Only authors are allowed to create books.",
+    "MissingCoverImage":"Cover image file is required.",
+    "ImageUploadError": "Failed to upload cover image.",
+    "CreatedSuccess":   "Book created successfully.",
+    "CreateError":      "Failed to create book. Please try again."
   }
 }

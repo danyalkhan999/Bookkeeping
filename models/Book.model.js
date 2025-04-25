@@ -1,16 +1,28 @@
+// models/Book.model.js
 const mongoose = require("mongoose");
 
-const bookSchema = new mongoose.Schema({
-  title: { type: String, required: true },
-  coverImage: { type: String }, // Firebase image URL
-  author: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-  borrower: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-  library: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Library",
-    required: true,
+const bookSchema = new mongoose.Schema(
+  {
+    title: { type: String, required: true },
+    coverImage: { type: String, required: true }, // URL from Firebase
+    author: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    borrower: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      default: null,
+    },
+    library: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Library",
+      required: true,
+    },
+    description: { type: String, default: "" },
   },
-  description: { type: String },
-});
+  { timestamps: true }
+);
 
 module.exports = mongoose.model("Book", bookSchema);
