@@ -15,11 +15,9 @@ const bookSchema = new mongoose.Schema(
       ref: "User",
       default: null,
     },
-    library: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Library",
-      required: true,
-    },
+    libraries: [
+      { type: mongoose.Schema.Types.ObjectId, ref: 'Library' }
+    ],
     description: { type: String, default: "" },
   },
   { timestamps: true }

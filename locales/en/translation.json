@@ -31,6 +31,20 @@
     "NotYourBook": "You cannot return a book you haven't borrowed.",
     "ReturnSuccess": "Book returned successfully.",
     "ReturnFailed": "Failed to return the book. Please try again."
+  },
+  "library": {
+    "Created": "Library created successfully.",
+    "Updated": "Library updated successfully.",
+    "Deleted": "Library deleted successfully.",
+    "NotFound": "Library not found.",
+    "InventoryFetchError":       "Failed to fetch inventory. Please try again.",
+    "AlreadyInAnother":          "Book is already in another library.",
+    "InventoryAddSuccess":       "Book added to library inventory.",
+    "InventoryAddError":         "Failed to add book to inventory.",
+    "BookNotInInventory":        "Book not found in this library’s inventory.",
+    "InventoryRemoveSuccess":    "Book removed from library inventory.",
+    "InventoryRemoveError":      "Failed to remove book from inventory."
   }
+
 
 }

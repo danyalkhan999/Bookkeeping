@@ -8,15 +8,13 @@ exports.getBookById = async (req, res) => {
     const book = await Book.findById(req.params.id)
       .populate("author", "name email")
       .populate("borrower", "name email")
-      .populate("library", "name location");
+      .populate("libraries", "name address");
 
     if (!book) {
       return res.status(404).json({ message: req.t("books.NotFound") });
     }
-
     res.status(200).json({ book });
   } catch (err) {
-    console.error(err);
     res.status(500).json({ message: req.t("books.FetchError") });
   }
 };
@@ -29,7 +27,7 @@ exports.updateBook = async (req, res) => {
       return res.status(404).json({ message: req.t("books.NotFound") });
     }
 
-    // only the original author can update
+    // Only original author may update
     if (
       req.user.role !== "author" ||
       req.user._id.toString() !== book.author.toString()
@@ -37,24 +35,22 @@ exports.updateBook = async (req, res) => {
       return res.status(403).json({ message: req.t("books.NotAuthorized") });
     }
 
-    const { title, description, library, borrower } = req.body;
+    const { title, description, libraries } = req.body;
     if (title !== undefined) book.title = title;
     if (description !== undefined) book.description = description;
-    if (library !== undefined) book.library = library;
-    if (borrower !== undefined) book.borrower = borrower;
+    if (Array.isArray(libraries)) book.libraries = libraries;
 
     await book.save();
     const updated = await book
       .populate("author", "name email")
       .populate("borrower", "name email")
-      .populate("library", "name location")
+      .populate("libraries", "name address")
       .execPopulate();
 
     res
       .status(200)
       .json({ message: req.t("books.UpdateSuccess"), book: updated });
   } catch (err) {
-    console.error(err);
     res.status(500).json({ message: req.t("books.UpdateError") });
   }
 };
@@ -83,7 +79,7 @@ exports.deleteBook = async (req, res) => {
   }
 };
 
-exports.createBook = async (req, res) => {
+/* exports.createBook = async (req, res) => {
   try {
     // 1️⃣ Validate required fields
     const { title, author, library, description = "" } = req.body;
@@ -147,16 +143,50 @@ exports.createBook = async (req, res) => {
     console.error(error);
     res.status(500).json({ message: req.t("books.CreateError") });
   }
+}; */
+
+exports.createBook = async (req, res) => {
+  try {
+    const { title, description = "", libraries = [] } = req.body;
+
+    if (!title || !libraries.length) {
+      return res.status(400).json({ message: req.t("books.MissingFields") });
+    }
+
+    if (req.user.role !== "author") {
+      return res.status(403).json({ message: req.t("books.NotAuthorized") });
+    }
+
+    const book = new Book({
+      title,
+      description,
+      author: req.user._id,
+      libraries, // ← assign multiple libraries
+    });
+
+    await book.save();
+    const populated = await book
+      .populate("author", "name email")
+      .populate("libraries", "name address")
+      .execPopulate();
+
+    res
+      .status(201)
+      .json({ message: req.t("books.CreatedSuccess"), book: populated });
+  } catch (err) {
+    res.status(500).json({ message: req.t("books.CreateError") });
+  }
 };
 
+// controllers/book.controller.js
 exports.getAllBooks = async (req, res) => {
   try {
     const books = await Book.find()
       .populate("author", "name email")
       .populate("borrower", "name email")
-      .populate("library", "name location");
+      .populate("libraries", "name address");
 
-    res.json({ books });
+    res.status(200).json({ books });
   } catch (err) {
     res.status(500).json({ message: req.t("books.FetchError") });
   }
