@@ -1,7 +1,6 @@
-const express = require("express");
-const router = express.Router();
-const auth = require("../middlewares/auth.middleware");
-const checkRoute = require("../middlewares/role.middleware");
+const router = require("express").Router();
+const { auth } = require("../middlewares/auth.middleware");
+const checkRole = require("../middlewares/role.middleware");
 const { borrowBook, returnBook } = require("../controllers/borrow.controller");
 
 // Borrow a book

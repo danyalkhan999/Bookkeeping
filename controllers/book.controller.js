@@ -1,6 +1,6 @@
 const Book = require("../models/Book.model");
-const bucket = require("../config/firebase");
-const { v4: uuidv4 } = require("uuid");
+// const bucket = require("../config/firebase");
+// const { v4: uuidv4 } = require("uuid");
 
 // GET /api/books/:id
 exports.getBookById = async (req, res) => {

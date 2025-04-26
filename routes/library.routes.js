@@ -1,6 +1,5 @@
-const express = require("express");
-const router = express.Router();
-const auth = require("../middlewares/auth.middleware");
+const router = require("express").Router();
+const { auth } = require("../middlewares/auth.middleware");
 const inventoryRoutes = require("../routes/libraryInventory.route");
 const {
   createLibrary,
