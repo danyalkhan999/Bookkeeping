@@ -14,6 +14,7 @@ i18next
     },
     detection: {
       order: ["querystring", "header"],
+      lookupQuerystring: "lang", // 🔥 Here you force it to use 'lang' instead of default 'lng'
       caches: false,
     },
   });
