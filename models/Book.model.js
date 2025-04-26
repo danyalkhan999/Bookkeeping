@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const bookSchema = new mongoose.Schema(
   {
     title: { type: String, required: true },
-    coverImage: { type: String, required: true }, // URL from Firebase
+    coverImage: { type: String }, // URL from Firebase
     author: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
@@ -15,9 +15,7 @@ const bookSchema = new mongoose.Schema(
       ref: "User",
       default: null,
     },
-    libraries: [
-      { type: mongoose.Schema.Types.ObjectId, ref: 'Library' }
-    ],
+    libraries: [{ type: mongoose.Schema.Types.ObjectId, ref: "Library" }],
     description: { type: String, default: "" },
   },
   { timestamps: true }
