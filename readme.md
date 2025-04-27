@@ -5,16 +5,16 @@
 
 ### Books
 
-#### 1. **GET /api/books**
+#### 1. GET /api/books
 
 Retrieve a list of all books.
 
-- **Method**: `GET`
-- **Headers**:
+- Method: `GET`
+- Headers:
   - `Authorization: Bearer <your_jwt_token>`
-- **Response**:
-  - **Status Code**: `200 OK`
-  - **Body**:
+- Response:
+  - Status Code: `200 OK`
+  - Body:
     ```json
     {
       "books": [
@@ -32,18 +32,18 @@ Retrieve a list of all books.
     }
     ```
 
-#### 2. **GET /api/books/:id**
+#### 2. GET /api/books/:id
 
 Retrieve details of a specific book by its ID. This should include the details of the Library, Author, and Borrower associated with the book.
 
-- **Method**: `GET`
-- **Headers**:
+- Method: `GET`
+- Headers:
   - `Authorization: Bearer <your_jwt_token>`
-- **Params**:
+- Params:
   - `id`: Book ID
-- **Response**:
-  - **Status Code**: `200 OK`
-  - **Body**:
+- Response:
+  - Status Code: `200 OK`
+  - Body:
     ```json
     {
       "_id": "<book_id>",
@@ -71,22 +71,22 @@ Retrieve details of a specific book by its ID. This should include the details o
     }
     ```
 
-#### 3. **POST /api/books**
+#### 3. POST /api/books
 
 Create a new book entry.
 
-- **Method**: `POST`
-- **Headers**:
+- Method: `POST`
+- Headers:
   - `Authorization: Bearer <your_jwt_token>`
   - `Content-Type: multipart/form-data`
-- **Body** (form-data):
+- Body (form-data):
   - `title`: `<book_title>` _(Required)_
   - `description`: `<book_description>` _(Optional)_
   - `libraries`: `<array_of_library_ids>` _(Optional)_
-  - `coverImage`: `<file>` _(Required, image file)_
-- **Response**:
-  - **Status Code**: `201 Created`
-  - **Body**:
+  - `coverImage`: `<file>` 
+- Response:
+  - Status Code: `201 Created`
+  - Body:
     ```json
     {
       "message": "Book Created Successfully",
@@ -101,24 +101,24 @@ Create a new book entry.
     }
     ```
 
-#### 4. **PUT /api/books/:id**
+#### 4. PUT /api/books/:id
 
 Update details of a specific book by its ID.
 
-- **Method**: `PUT`
-- **Headers**:
+- Method: `PUT`
+- Headers:
   - `Authorization: Bearer <your_jwt_token>`
   - `Content-Type: multipart/form-data`
-- **Params**:
+- Params:
   - `id`: Book ID
-- **Body** (form-data):
+- Body (form-data):
   - `title`: `<new_book_title>` _(Optional)_
   - `description`: `<new_book_description>` _(Optional)_
   - `libraries`: `<array_of_library_ids>` _(Optional)_
   - `coverImage`: `<file>` _(Optional, new image file)_
-- **Response**:
-  - **Status Code**: `200 OK`
-  - **Body**:
+- Response:
+  - Status Code: `200 OK`
+  - Body:
     ```json
     {
       "message": "Book Updated Successfully",
@@ -133,18 +133,18 @@ Update details of a specific book by its ID.
     }
     ```
 
-#### 5. **DELETE /api/books/:id**
+#### 5. DELETE /api/books/:id
 
 Delete a book by its ID.
 
-- **Method**: `DELETE`
-- **Headers**:
+- Method: `DELETE`
+- Headers:
   - `Authorization: Bearer <your_jwt_token>`
-- **Params**:
+- Params:
   - `id`: Book ID
-- **Response**:
-  - **Status Code**: `200 OK`
-  - **Body**:
+- Response:
+  - Status Code: `200 OK`
+  - Body:
     ```json
     {
       "message": "Book Deleted Successfully"
@@ -155,19 +155,19 @@ Delete a book by its ID.
 
 ### Users
 
-#### 1. **POST /api/users/register**
+#### 1. POST /api/users/register
 
 Register a new user (both authors and borrowers).
 
-- **Method**: `POST`
-- **Body** (JSON):
+- Method: `POST`
+- Body (JSON):
   - `name`: `<user_name>` _(Required)_
   - `email`: `<user_email>` _(Required)_
   - `password`: `<user_password>` _(Required)_
   - `role`: `<author/borrower>` _(Required)_
-- **Response**:
-  - **Status Code**: `201 Created`
-  - **Body**:
+- Response:
+  - Status Code: `201 Created`
+  - Body:
     ```json
     {
       "message": "User Registered Successfully",
@@ -180,17 +180,17 @@ Register a new user (both authors and borrowers).
     }
     ```
 
-#### 2. **POST /api/users/login**
+#### 2. POST /api/users/login
 
 Authenticate user and generate JWT token.
 
-- **Method**: `POST`
-- **Body** (JSON):
+- Method: `POST`
+- Body (JSON):
   - `email`: `<user_email>` _(Required)_
   - `password`: `<user_password>` _(Required)_
-- **Response**:
-  - **Status Code**: `200 OK`
-  - **Body**:
+- Response:
+  - Status Code: `200 OK`
+  - Body:
     ```json
     {
       "message": "Login Successful",
@@ -202,18 +202,18 @@ Authenticate user and generate JWT token.
 
 ### Borrowing
 
-#### 1. **POST /api/borrow**
+#### 1. POST /api/borrow
 
 Borrow a book against a charge.
 
-- **Method**: `POST`
-- **Headers**:
+- Method: `POST`
+- Headers:
   - `Authorization: Bearer <your_jwt_token>`
-- **Body** (JSON):
+- Body (JSON):
   - `bookId`: `<book_id>` _(Required)_
-- **Response**:
-  - **Status Code**: `200 OK`
-  - **Body**:
+- Response:
+  - Status Code: `200 OK`
+  - Body:
     ```json
     {
       "message": "Book Borrowed Successfully",
@@ -226,18 +226,18 @@ Borrow a book against a charge.
     }
     ```
 
-#### 2. **PUT /api/return/:id**
+#### 2. PUT /api/return/:id
 
 Return a borrowed book by its ID.
 
-- **Method**: `PUT`
-- **Headers**:
+- Method: `PUT`
+- Headers:
   - `Authorization: Bearer <your_jwt_token>`
-- **Params**:
+- Params:
   - `id`: Book ID
-- **Response**:
-  - **Status Code**: `200 OK`
-  - **Body**:
+- Response:
+  - Status Code: `200 OK`
+  - Body:
     ```json
     {
       "message": "Book Returned Successfully",
@@ -254,14 +254,14 @@ Return a borrowed book by its ID.
 
 ### Libraries
 
-#### 1. **GET /api/libraries**
+#### 1. GET /api/libraries
 
 Retrieve a list of all libraries.
 
-- **Method**: `GET`
-- **Response**:
-  - **Status Code**: `200 OK`
-  - **Body**:
+- Method: `GET`
+- Response:
+  - Status Code: `200 OK`
+  - Body:
     ```json
     {
       "libraries": [
@@ -275,16 +275,16 @@ Retrieve a list of all libraries.
     }
     ```
 
-#### 2. **GET /api/libraries/:id**
+#### 2. GET /api/libraries/:id
 
 Retrieve details of a specific library by its ID. This should include the details of all the books owned by the library, and for each book, the borrower details.
 
-- **Method**: `GET`
-- **Params**:
+- Method: `GET`
+- Params:
   - `id`: Library ID
-- **Response**:
-  - **Status Code**: `200 OK`
-  - **Body**:
+- Response:
+  - Status Code: `200 OK`
+  - Body:
     ```json
     {
       "_id": "<library_id>",
@@ -304,17 +304,17 @@ Retrieve details of a specific library by its ID. This should include the detail
     }
     ```
 
-#### 3. **POST /api/libraries**
+#### 3. POST /api/libraries
 
 Create a new library.
 
-- **Method**: `POST`
-- **Body** (JSON):
+- Method: `POST`
+- Body (JSON):
   - `name`: `<library_name>` _(Required)_
   - `address`: `<library_address>` _(Required)_
-- **Response**:
-  - **Status Code**: `201 Created`
-  - **Body**:
+- Response:
+  - Status Code: `201 Created`
+  - Body:
     ```json
     {
       "message": "Library Created Successfully",
@@ -326,22 +326,22 @@ Create a new library.
     }
     ```
 
-#### 4. **PUT /api/libraries/:id**
+#### 4. PUT /api/libraries/:id
 
 Update details of a specific library by its ID.
 
-- **Method**: `PUT`
-- **Params**:
+- Method: `PUT`
+- Params:
   - `id`: Library ID
-- **Body** (JSON):
+- Body (JSON):
   - `
 
 name`: `<updated*library_name>` *(Optional)\_
 
 - `address`: `<updated_library_address>` _(Optional)_
-- **Response**:
-  - **Status Code**: `200 OK`
-  - **Body**:
+- Response:
+  - Status Code: `200 OK`
+  - Body:
     ```json
     {
       "message": "Library Updated Successfully",
@@ -353,16 +353,16 @@ name`: `<updated*library_name>` *(Optional)\_
     }
     ```
 
-#### 5. **DELETE /api/libraries/:id**
+#### 5. DELETE /api/libraries/:id
 
 Delete a library by its ID.
 
-- **Method**: `DELETE`
-- **Params**:
+- Method: `DELETE`
+- Params:
   - `id`: Library ID
-- **Response**:
-  - **Status Code**: `200 OK`
-  - **Body**:
+- Response:
+  - Status Code: `200 OK`
+  - Body:
     ```json
     {
       "message": "Library Deleted Successfully"
@@ -373,16 +373,16 @@ Delete a library by its ID.
 
 ### Library Inventory
 
-#### 1. **GET /api/libraries/:id/inventory**
+#### 1. GET /api/libraries/:id/inventory
 
 Retrieve a list of books available in a specific library.
 
-- **Method**: `GET`
-- **Params**:
+- Method: `GET`
+- Params:
   - `id`: Library ID
-- **Response**:
-  - **Status Code**: `200 OK`
-  - **Body**:
+- Response:
+  - Status Code: `200 OK`
+  - Body:
     ```json
     {
       "inventory": [
@@ -397,18 +397,18 @@ Retrieve a list of books available in a specific library.
     }
     ```
 
-#### 2. **POST /api/libraries/:id/inventory**
+#### 2. POST /api/libraries/:id/inventory
 
 Add a book to the inventory of a specific library.
 
-- **Method**: `POST`
-- **Params**:
+- Method: `POST`
+- Params:
   - `id`: Library ID
-- **Body** (JSON):
+- Body (JSON):
   - `bookId`: `<book_id>` _(Required)_
-- **Response**:
-  - **Status Code**: `200 OK`
-  - **Body**:
+- Response:
+  - Status Code: `200 OK`
+  - Body:
     ```json
     {
       "message": "Book Added to Library Inventory",
@@ -421,17 +421,17 @@ Add a book to the inventory of a specific library.
     }
     ```
 
-#### 3. **DELETE /api/libraries/:id/inventory/:bookId**
+#### 3. DELETE /api/libraries/:id/inventory/:bookId
 
 Remove a book from the inventory of a specific library by its ID.
 
-- **Method**: `DELETE`
-- **Params**:
+- Method: `DELETE`
+- Params:
   - `id`: Library ID
   - `bookId`: Book ID
-- **Response**:
-  - **Status Code**: `200 OK`
-  - **Body**:
+- Response:
+  - Status Code: `200 OK`
+  - Body:
     ```json
     {
       "message": "Book Removed from Library Inventory"
