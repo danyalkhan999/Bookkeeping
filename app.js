@@ -16,9 +16,8 @@ app.use("/api/user", userRoutes);
 app.use("/api/books", booksRoutes);
 app.use("/api/libraries", libraryRoutes);
 
-app.get("/hi", (req, res) => {
-  const message = req.t("users.Hello");
-  res.send({ message });
+app.get("/", (req, res) => {
+  res.send("Server is up and running!");
 });
 
 module.exports = app;
