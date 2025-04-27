@@ -39,21 +39,34 @@ exports.addToInventory = async (req, res) => {
       return res.status(404).json({ message: req.t("books.NotFound") });
     }
 
-    // Prevent duplicates
+    // Prevent duplicate addition
     if (book.libraries.includes(libraryId)) {
       return res
         .status(400)
         .json({ message: req.t("library.AlreadyInInventory") });
     }
 
+    // 📚 Add this library to the book's libraries array
     book.libraries.push(libraryId);
     await book.save();
 
+    // 🔥 Now, fetch updated library info including all its books
+    const updatedBooks = await Book.find({ libraries: libraryId }).populate([
+      { path: "author", select: "name email" },
+      { path: "borrower", select: "name email" },
+    ]);
+
     res.status(200).json({
       message: req.t("library.InventoryAddSuccess"),
-      book,
+      library: {
+        _id: library._id,
+        name: library.name,
+        address: library.address,
+        books: updatedBooks,
+      },
     });
   } catch (err) {
+    console.error("Add to Inventory Error:", err);
     res.status(500).json({ message: req.t("library.InventoryAddError") });
   }
 };

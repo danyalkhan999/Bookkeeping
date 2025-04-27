@@ -5,10 +5,14 @@ const Book = require("../models/Book.model");
 // GET /api/books/:id
 exports.getBookById = async (req, res) => {
   try {
-    const book = await Book.findById(req.params.id)
-      .populate("author", "name email")
-      .populate("borrower", "name email")
-      .populate("libraries", "name address");
+    const book = await Book.findById(req.params.id).populate([
+      { path: "author", select: "name email" },
+      { path: "borrower", select: "name email" },
+      { path: "libraries", select: "name address" },
+    ]);
+    // .populate("author", "name email")
+    // .populate("borrower", "name email")
+    // .populate("libraries", "name address");
 
     if (!book) {
       return res.status(404).json({ message: req.t("books.NotFound") });
@@ -215,10 +219,11 @@ exports.createBook = async (req, res) => {
 // controllers/book.controller.js
 exports.getAllBooks = async (req, res) => {
   try {
-    const books = await Book.find()
-      .populate("author", "name email")
-      .populate("borrower", "name email")
-      .populate("libraries", "name address");
+    const books = await Book.find().populate([
+      { path: "author", select: "name email" },
+      { path: "borrower", select: "name email" },
+      { path: "libraries", select: "name address" },
+    ]);
 
     res.status(200).json({ books });
   } catch (err) {
