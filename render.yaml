@@ -9,7 +9,15 @@ services:
     healthCheckPath: /
     autoDeploy: true
     envVars:
+      - key: PORT
+        value: 3600
       - key: MONGO_URI
         value: "mongodb+srv://danyalkhan8271:hEtcpCuNSIE2aVH5@cluster0.97ulwtz.mongodb.net/"
       - key: JWT_SECRET
         value: "gm(J<)K|139<Spe;woAAVeZ2C8f"
+      - key: CLOUDINARY_CLOUD_NAME
+        value: "dvikzfs8c"
+      - key: CLOUDINARY_API_SECRET
+        value: "CHqBcYrPWmhYebUtoec9tonHHug"
+      - key: CLOUDINARY_API_KEY
+        value: "161831312634235"
