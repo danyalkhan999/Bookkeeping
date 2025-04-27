@@ -9,17 +9,18 @@
     },
   "books": {
     "FetchError": "Failed to fetch books. Please try again later.",
-    "MissingFields":    "Title, author, and library are required.",
     "NotAuthorized":    "Only authors are allowed to create books.",
     "MissingCoverImage":"Cover image file is required.",
     "ImageUploadError": "Failed to upload cover image.",
     "CreatedSuccess":   "Book created successfully.",
-    "CreateError":      "Failed to create book. Please try again.",
     "NotFound":       "Book not found.",
     "UpdateSuccess":  "Book updated successfully.",
     "UpdateError":    "Failed to update book. Please try again.",
     "DeleteSuccess":  "Book deleted successfully.",
-    "DeleteError":    "Failed to delete book. Please try again."
+    "DeleteError":    "Failed to delete book. Please try again.",
+    "MissingFields": "Title and libraries are required.",
+    "AlreadyExists": "This book already exists in one of the selected libraries.",
+    "CreateError": "Something went wrong while creating the book."
   },
   "borrower": {
     "OnlyBorrowerAllowed": "Only users with the borrower role can borrow books.",

@@ -1,5 +1,5 @@
 const router = require("express").Router({ mergeParams: true });
-const { auth } = require("../middleware/auth.middleware");
+const { auth } = require("../middlewares/auth.middleware");
 const checkRole = require("../middlewares/role.middleware");
 const {
   getInventory,

@@ -6,7 +6,7 @@ exports.borrowBook = async (req, res) => {
     //   return res.status(403).json({ message: req.t('borrower.OnlyBorrowerAllowed') });
     // }
 
-    const { bookId } = req.body;
+    const bookId = req.params.id;
     if (!bookId) {
       return res
         .status(400)

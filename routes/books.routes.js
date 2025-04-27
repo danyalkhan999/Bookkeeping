@@ -6,7 +6,9 @@ const {
   updateBook,
   deleteBook,
 } = require("../controllers/book.controller");
+const { borrowBook, returnBook } = require("../controllers/borrow.controller");
 const { auth } = require("../middlewares/auth.middleware");
+const checkRole = require("../middlewares/role.middleware");
 
 // List & Detail
 router.get("/", auth, getAllBooks);
@@ -22,5 +24,9 @@ router.post("/", auth, createBook);
 // router.put("/:id", auth, upload.single("coverImage"), updateBook);
 router.put("/:id", auth, updateBook);
 router.delete("/:id", auth, deleteBook);
+
+// Borrow & Return APIs (nested under books)
+router.post("/:id/borrow", auth, borrowBook);
+router.put("/:id/return", auth, checkRole("borrower"), returnBook);
 
 module.exports = router;

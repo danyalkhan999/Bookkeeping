@@ -14,6 +14,7 @@ exports.createLibrary = async (req, res) => {
 exports.getAllLibraries = async (req, res) => {
   try {
     const libraries = await Library.find();
+    console.log(libraries);
     res.json({ libraries });
   } catch (error) {
     res.status(500).json({ message: error.message });

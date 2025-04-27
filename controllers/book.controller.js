@@ -22,35 +22,54 @@ exports.getBookById = async (req, res) => {
 // PUT /api/books/:id
 exports.updateBook = async (req, res) => {
   try {
+    const { title, description, libraries } = req.body;
+
     const book = await Book.findById(req.params.id);
+
     if (!book) {
       return res.status(404).json({ message: req.t("books.NotFound") });
     }
 
-    // Only original author may update
-    if (
-      req.user.role !== "author" ||
-      req.user._id.toString() !== book.author.toString()
-    ) {
-      return res.status(403).json({ message: req.t("books.NotAuthorized") });
+    // Only the author who created the book can update it (optional security check)
+    if (book.author.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: req.t("books.UpdateNotAllowed") });
     }
 
-    const { title, description, libraries } = req.body;
-    if (title !== undefined) book.title = title;
-    if (description !== undefined) book.description = description;
-    if (Array.isArray(libraries)) book.libraries = libraries;
+    // 📚 If client sent new libraries
+    if (Array.isArray(libraries)) {
+      const existingLibraryIds = book.libraries.map((id) => id.toString());
+      const newLibraryIds = libraries.map((id) => id.toString());
+
+      const librariesToAdd = newLibraryIds.filter(
+        (id) => !existingLibraryIds.includes(id)
+      );
+
+      book.libraries.push(...librariesToAdd);
+    }
+
+    // Update fields
+    if (title) book.title = title;
+    if (description) book.description = description;
+    // if (updatedLibraries) book.libraries = updatedLibraries;
+
+    // If you also handle cover image upload, update that here
+    if (req.file) {
+      book.coverImage = req.file.path; // or URL after Firebase upload later
+    }
 
     await book.save();
-    const updated = await book
-      .populate("author", "name email")
-      .populate("borrower", "name email")
-      .populate("libraries", "name address")
-      .execPopulate();
 
-    res
-      .status(200)
-      .json({ message: req.t("books.UpdateSuccess"), book: updated });
+    const populatedBook = await book.populate([
+      { path: "author", select: "name email" },
+      { path: "libraries", select: "name address" },
+    ]);
+
+    res.status(200).json({
+      message: req.t("books.UpdateSuccess"),
+      book: populatedBook,
+    });
   } catch (err) {
+    console.error("Error in updateBook:", err);
     res.status(500).json({ message: req.t("books.UpdateError") });
   }
 };
@@ -157,23 +176,38 @@ exports.createBook = async (req, res) => {
       return res.status(403).json({ message: req.t("books.NotAuthorized") });
     }
 
+    console.log("User Info:", req.user);
+
+    // 🔥 Duplicate Check: Find if same title already exists in any of the libraries
+    const existingBook = await Book.findOne({
+      title,
+      libraries: { $in: libraries },
+    });
+
+    if (existingBook) {
+      return res.status(409).json({ message: req.t("books.AlreadyExists") });
+    }
+
     const book = new Book({
       title,
       description,
       author: req.user._id,
-      libraries, // ← assign multiple libraries
+      libraries,
     });
 
     await book.save();
-    const populated = await book
-      .populate("author", "name email")
-      .populate("libraries", "name address")
-      .execPopulate();
 
-    res
-      .status(201)
-      .json({ message: req.t("books.CreatedSuccess"), book: populated });
+    const populatedBook = await book.populate([
+      { path: "author", select: "name email" },
+      { path: "libraries", select: "name address" },
+    ]);
+
+    res.status(201).json({
+      message: req.t("books.CreatedSuccess"),
+      book: populatedBook,
+    });
   } catch (err) {
+    console.log("Error in createBook:", err);
     res.status(500).json({ message: req.t("books.CreateError") });
   }
 };
