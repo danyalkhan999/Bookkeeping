@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: my-backend-service
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    branch: main
+    healthCheckPath: /
+    autoDeploy: true
+    envVars:
+      - key: MONGO_URI
+        value: "mongodb+srv://danyalkhan8271:hEtcpCuNSIE2aVH5@cluster0.97ulwtz.mongodb.net/"
+      - key: JWT_SECRET
+        value: "gm(J<)K|139<Spe;woAAVeZ2C8f"
