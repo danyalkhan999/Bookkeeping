@@ -33,7 +33,7 @@ exports.updateBook = async (req, res) => {
       return res.status(404).json({ message: req.t("books.NotFound") });
     }
 
-    console.log("req", req);
+    // console.log("req", req);
 
     const { title, description, libraries } = req.body;
 
