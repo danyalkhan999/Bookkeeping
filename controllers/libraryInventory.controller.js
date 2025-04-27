@@ -13,9 +13,10 @@ exports.getInventory = async (req, res) => {
     const books = await Book.find({
       libraries: libraryId,
       borrower: null,
-    })
-      .populate("author", "name email")
-      .populate("libraries", "name"); // optional
+    }).populate([
+      { path: "author", select: "name email" },
+      { path: "libraries", select: "name" },
+    ]);
 
     res.status(200).json({ library, books });
   } catch (err) {

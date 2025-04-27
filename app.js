@@ -5,6 +5,7 @@ const i18nMiddleware = require("./utils/i18n");
 const app = express();
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(i18nMiddleware);
 app.use(cors());
 
@@ -16,7 +17,6 @@ app.use("/api/books", booksRoutes);
 app.use("/api/libraries", libraryRoutes);
 
 app.get("/hi", (req, res) => {
-  console.log("HIIIIIII");
   const message = req.t("users.Hello");
   res.send({ message });
 });

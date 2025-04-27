@@ -28,10 +28,9 @@ exports.getLibraryById = async (req, res) => {
       return res.status(404).json({ message: req.t("library.NotFound") });
     }
 
-    const books = await Book.find({ library: library._id }).populate(
-      "borrower",
-      "name email"
-    );
+    const books = await Book.find({ library: library._id }).populate([
+      { path: "borrower", select: "name email" },
+    ]);
 
     res.json({ library, books });
   } catch (error) {
