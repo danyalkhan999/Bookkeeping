@@ -27,7 +27,7 @@ Retrieve a list of all books.
           "borrower": "<borrower_name>",
           "libraries": ["<library_name>", "<library_name>"]
         },
-        ...
+        
       ]
     }
     ```
@@ -66,7 +66,7 @@ Retrieve details of a specific book by its ID. This should include the details o
           "name": "<library_name>",
           "address": "<library_address>"
         },
-        ...
+        
       ]
     }
     ```
@@ -270,7 +270,7 @@ Retrieve a list of all libraries.
           "name": "<library_name>",
           "address": "<library_address>"
         },
-        ...
+        
       ]
     }
     ```
@@ -299,7 +299,7 @@ Retrieve details of a specific library by its ID. This should include the detail
             "name": "<borrower_name>"
           }
         },
-        ...
+        
       ]
     }
     ```
@@ -392,7 +392,7 @@ Retrieve a list of books available in a specific library.
           "description": "<book_description>",
           "coverImage": "<book_cover_image_url>"
         },
-        ...
+        
       ]
     }
     ```
